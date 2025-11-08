@@ -106,16 +106,63 @@ return {
 ```
 </details>
 
+<details>
+<summary>mini.deps setup</summary>
+
+<br/>
+Add this to your init.lua file and you are good to go.
+
+```lua
+local add = MiniDeps.add
+
+-- Theme plugins
+add({ source = 'ribru17/bamboo.nvim' })
+add({ source = 'catppuccin/nvim', name = 'catppuccin' })
+add({ source = 'neanias/everforest-nvim' })
+add({ source = 'kepano/flexoki-neovim' })
+add({ source = 'ellisonleao/gruvbox.nvim' })
+add({ source = 'rebelot/kanagawa.nvim' })
+add({ source = 'tahayvr/matteblack.nvim' })
+add({ source = 'shaunsingh/nord.nvim' })
+add({ source = 'rose-pine/neovim', name = 'rose-pine' })
+add({ source = 'folke/tokyonight.nvim' })
+add({ source = 'EdenEast/nightfox.nvim' })
+
+add({ source = 'loctvl842/monokai-pro.nvim' })
+require('monokai-pro').setup({
+  filter = 'ristretto',
+  override = function()
+    return {
+      NonText = { fg = '#948a8b' },
+      MiniIconsGrey = { fg = '#948a8b' },
+      MiniIconsRed = { fg = '#fd6883' },
+      MiniIconsBlue = { fg = '#85dacc' },
+      MiniIconsGreen = { fg = '#adda78' },
+      MiniIconsYellow = { fg = '#f9cc6c' },
+      MiniIconsOrange = { fg = '#f38d70' },
+      MiniIconsPurple = { fg = '#a8a9eb' },
+      MiniIconsAzure = { fg = '#a8a9eb' },
+      MiniIconsCyan = { fg = '#85dacc' },
+    }
+  end,
+})
+
+add({ source = 'EskelinenAntti/omarchy-theme-loader.nvim' })
+```
+
+</details>
+
 ## Custom Omarchy themes
 
 If you use a custom Omarchy theme
 1. Install the Neovim plugin for that theme.
 2. Configure the mapping between Omarchy theme name and Neovim colorscheme.
 
+The examples below shows how to configure `omarchy-theme-loader` to work with the <a href="https://github.com/bjarneo/omarchy-ash-theme">Omarchy Ash Theme</a>.
+
 <details>
 <summary>lazy.nvim example</summary>
 
-The example below shows how to configure `omarchy-theme-loader` to work with the <a href="https://github.com/bjarneo/omarchy-ash-theme">Omarchy Ash Theme</a>.
 
 ```lua
 return {
@@ -146,7 +193,34 @@ return {
 
 </details>
 
-Don't know where to look for the plugin and the colorscheme? You can find those from the custom Omarchy theme's repository, from `neovim.lua` file.
+<details>
 
-For example, see the [neovim.lua](https://github.com/bjarneo/omarchy-ash-theme/blob/main/neovim.lua) for the Omarchy Ash Theme: the Neovim plugin is `bjarneo/ash.nvim` and the colorscheme is `ash`.
+<summary>mini.deps example</summary>
+
+```lua
+local add = MiniDeps.add
+
+-- ... other themes
+
+-- 1. Install the theme plugin
+add({ source = "bjarneo/ash.nvim" })
+
+-- 2. Configure required mapping between Omarchy theme name and Neovim colorscheme.
+add({ source = 'EskelinenAntti/omarchy-theme-loader.nvim' })
+require("omarchy-theme-loader").setup({
+    themes = {
+        -- Name of the Omarchy theme.
+        ["ash"] = {
+            -- Name of the corresponding Neovim colorscheme.
+            colorscheme = "ash"
+        }
+    }
+})
+```
+
+</details>
+
+Don't know where to look for the plugin or the colorscheme? You can find those from the custom Omarchy theme's repository, from `neovim.lua` file.
+
+For example, see the [neovim.lua](https://github.com/bjarneo/omarchy-ash-theme/blob/main/neovim.lua) file for the Omarchy Ash Theme: the Neovim plugin is `bjarneo/ash.nvim` and the colorscheme is `ash`.
 
