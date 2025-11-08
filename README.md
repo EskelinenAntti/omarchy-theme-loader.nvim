@@ -1,4 +1,4 @@
-# Omarchy Theme Loader
+# Omarchy Theme Loader 🎨
 
 A drop-in plugin for changing Neovim theme automatically when Omarchy theme changes.
 
