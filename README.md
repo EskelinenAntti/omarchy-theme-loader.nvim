@@ -2,21 +2,18 @@
 
 A drop-in plugin for changing Neovim theme automatically when Omarchy theme changes.
 
-## Usage
-
-To use 
-1. Install the themes itself.
-2. Install the `EskelinenAntti/omarchy-theme-loader.nvim` plugin.
+## Installation
 
 <details>
 <summary>lazy.nvim setup</summary>
-
 <br/>
+<p>
 Add this to your plugins folder and you are good to go.
+</p>
 
 ```lua
 return {
-    -- 1. Install the theme plugins for the various Omarchy themes.
+    -- 1. Install the Neovim plugins for Omarchy themes.
 	{
 		"ribru17/bamboo.nvim",
 		priority = 1000,
@@ -108,14 +105,15 @@ return {
 
 <details>
 <summary>mini.deps setup</summary>
-
 <br/>
+<p>
 Add this to your init.lua file and you are good to go.
+</p>
 
 ```lua
 local add = MiniDeps.add
 
--- Theme plugins
+-- 1. Install the Neovim plugins for Omarchy themes.
 add({ source = 'ribru17/bamboo.nvim' })
 add({ source = 'catppuccin/nvim', name = 'catppuccin' })
 add({ source = 'neanias/everforest-nvim' })
@@ -147,8 +145,23 @@ require('monokai-pro').setup({
   end,
 })
 
+-- 2. Install the omarchy-theme-loader plugin.
 add({ source = 'EskelinenAntti/omarchy-theme-loader.nvim' })
 ```
+
+</details>
+
+<details>
+
+<summary>Other plugin managers and manual installation</summary>  
+<br/>
+<p>
+To use
+<ol>
+    <li>Install the Neovim plugins for Omarchy themes (you can find the list of default theme plugins from above examples).</li>
+    <li>Install the `EskelinenAntti/omarchy-theme-loader.nvim` plugin.</li>
+</ol>
+</p>
 
 </details>
 
