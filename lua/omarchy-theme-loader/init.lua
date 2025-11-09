@@ -1,6 +1,4 @@
-local M = {}
-M.opts = require("omarchy-theme-loader.default-themes")
-
+local opts = require("omarchy-theme-loader.default-opts")
 local omarchy_current_path = vim.env.HOME .. "/.config/omarchy/current"
 
 --- Configuration for a single theme.
@@ -13,7 +11,7 @@ local omarchy_current_path = vim.env.HOME .. "/.config/omarchy/current"
 
 ---Get name of currently active Omarchy theme.
 ---@return string
-M.current_omarchy_theme_name = function()
+local function current_omarchy_theme_name()
 	-- Path to current/theme symlink
 	local symlink = omarchy_current_path .. "/theme"
 
@@ -27,10 +25,10 @@ M.current_omarchy_theme_name = function()
 end
 
 ---Sync Neovim theme to the current Omarchy theme.
-M.sync_theme = function()
-	local current_omarchy_theme_name = M.current_omarchy_theme_name()
+local function sync_theme()
+	local omarchy_theme = current_omarchy_theme_name()
 
-	local theme = M.opts.themes[current_omarchy_theme_name]
+	local theme = opts.themes[omarchy_theme]
 	if theme then
 		-- Reset background option to its default.
 		vim.o.background = "dark"
@@ -44,22 +42,28 @@ M.sync_theme = function()
 		vim.notify(
 			string.format(
 				"Did not find Neovim theme for Omarchy theme '%s'. Check your omarchy-theme-loader configuration.",
-				current_omarchy_theme_name
+				omarchy_theme
 			),
 			vim.log.levels.ERROR
 		)
 	end
 end
 
----@param opts Opts|nil
-M.setup = function(opts)
+local M = {}
+
+---@param user_opts Opts|nil
+M.setup = function(user_opts)
 	-- Combine user config with defaults.
-	M.opts = vim.tbl_deep_extend("force", M.opts, opts or {})
+	opts = vim.tbl_deep_extend("force", opts, user_opts or {})
 end
 
+---Sync the Neovim theme to current Omarchy theme, and start watching for Omarchy theme changes.
+---
+---Do not call this directly from your Neovim config; Neovim will call it automatically on startup via
+---`plugin/omarchy-theme-loader.lua`.
 M.start = function()
 	-- Sync the theme at startup.
-	M.sync_theme()
+	sync_theme()
 
 	local handle, err = vim.uv.new_fs_event()
 	if err or not handle then
@@ -77,7 +81,7 @@ M.start = function()
 
 		-- vim.cmd.* commands must not be called in fast event context, so defer it to be invoked soon by the main event loop.
 		vim.schedule(function()
-			M.sync_theme()
+			sync_theme()
 		end)
 	end)
 end
