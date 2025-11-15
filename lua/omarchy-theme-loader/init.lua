@@ -34,7 +34,7 @@ local function sync_theme()
 		vim.o.background = "dark"
 
 		-- Enable the actual theme.
-		vim.cmd.colorscheme(theme.colorscheme)
+		pcall(vim.cmd.colorscheme, theme.colorscheme)
 
 		-- Set background to be transparent.
 		require("omarchy-theme-loader.transparency").set_transparent_background()
