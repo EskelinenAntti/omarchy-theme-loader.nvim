@@ -1,6 +1,9 @@
 local opts = require("omarchy-theme-loader.default-opts")
 local omarchy_current_path = vim.env.HOME .. "/.config/omarchy/current"
 
+---@type userdata|nil
+local handle
+
 --- Configuration for a single theme.
 ---@class Theme
 ---@field colorscheme string The colorscheme name.
@@ -65,7 +68,15 @@ M.start = function()
 	-- Sync the theme at startup.
 	sync_theme()
 
-	local handle, err = vim.uv.new_fs_event()
+	-- mini.deps sources the plugin/omarchy-theme-loaders.lua multiple times, before and after loading the user configuration.
+	-- Hence, we want to make sure each time the start() function is called we synchronize the theme, but won't register any
+	-- additional file listeners.
+	if handle then
+		return
+	end
+
+	local err
+	handle, err = vim.uv.new_fs_event()
 	if err or not handle then
 		vim.notify(string.format("Could not start listening for Omarchy theme changes: %s", err), vim.log.levels.ERROR)
 		return
