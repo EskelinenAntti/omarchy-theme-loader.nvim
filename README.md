@@ -165,7 +165,10 @@ To use
 
 </details>
 
-## Custom Omarchy themes
+
+## Advanced configuration
+
+### Custom Omarchy themes
 
 If you use a custom Omarchy theme
 1. Install the Neovim plugin for that theme.
@@ -236,4 +239,81 @@ require("omarchy-theme-loader").setup({
 Don't know where to look for the plugin or the colorscheme? You can find those from the custom Omarchy theme's repository, from `neovim.lua` file.
 
 For example, see the [neovim.lua](https://github.com/bjarneo/omarchy-ash-theme/blob/main/neovim.lua) file for the Omarchy Ash Theme: the Neovim plugin is `bjarneo/ash.nvim` and the colorscheme is `ash`.
+
+## Overriding Omarchy's default themes
+
+Your are not forced to use the Neovim themes that Omarchy has specified: you can override the settings for any built-in themes or custom themes in your configuration. 
+
+For example, if you don't want to install all the various theme plugins, you can override omarchy-theme-loader to load only Neovim's builtin colorschemes:
+
+<details>
+<summary>lazy.nvim example</summary>
+
+
+```lua
+return {
+	{
+		"EskelinenAntti/omarchy-theme-loader.nvim",
+        opts = {
+            themes = {
+                ["tokyo-night"] = { colorscheme = "slate" },
+                ["catppuccin"] = { colorscheme = "blue" },
+                ["everforest"] = { colorscheme = "desert" },
+                ["gruvbox"] = { colorscheme = "retrobox" },
+                ["osaka-jade"] = { colorscheme = "slate" },
+                ["kanagawa"] = { colorscheme = "slate" },
+                ["nord"] = { colorscheme = "blue" },
+                ["matte-black"] = { colorscheme = "koehler" },
+                ["ristretto"] = { colorscheme = "koehler" },
+                ["flexoki-light"] = { colorscheme = "morning" },
+                ["rose-pine"] = { colorscheme = "morning" },
+                ["catppuccin-latte"] = { colorscheme = "delek" },
+            }
+        }
+
+	},
+```
+
+</details>
+
+<details>
+
+<summary>mini.deps example</summary>
+
+```lua
+local add = MiniDeps.add
+
+add("EskelinenAntti/omarchy-theme-loader.nvim")
+require("omarchy-theme-loader").setup({
+    themes = {
+		["tokyo-night"] = { colorscheme = "slate" },
+		["catppuccin"] = { colorscheme = "blue" },
+		["everforest"] = { colorscheme = "desert" },
+		["gruvbox"] = { colorscheme = "retrobox" },
+		["osaka-jade"] = { colorscheme = "slate" },
+		["kanagawa"] = { colorscheme = "slate" },
+		["nord"] = { colorscheme = "blue" },
+		["matte-black"] = { colorscheme = "koehler" },
+		["ristretto"] = { colorscheme = "koehler" },
+		["flexoki-light"] = { colorscheme = "morning" },
+		["rose-pine"] = { colorscheme = "morning" },
+		["catppuccin-latte"] = { colorscheme = "delek" },
+    }
+})
+```
+
+</details>
+
+## Other OSs
+
+The plugin only activates when it detects the Omarchy theme folder at `~/.config/omarchy/current/theme`.
+
+If you use the same Neovim configuration across different OSs, you can set a theme for non-Omarchy environments just like you would without the omarchy-theme-loader.nvim plugin:
+
+```lua
+vim.cmd.colorscheme("retrobox") -- or any other colorscheme you want to use
+```
+
+For Omarchy, this value will be overridden by omarchy-theme-loader, but it will still apply in other OSs and environments.
+
 
