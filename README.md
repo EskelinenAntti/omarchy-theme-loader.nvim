@@ -249,9 +249,9 @@ For example, see the [neovim.lua](https://github.com/bjarneo/omarchy-ash-theme/b
 
 ## Overriding Omarchy's default themes
 
-Your are not forced to use the Neovim themes that Omarchy has specified: you can override the settings for any built-in themes or custom themes in your configuration. 
+Your are not forced to use the same Neovim themes as Omarchy uses by default.
 
-For example, if you don't want to install all the various theme plugins, you can override omarchy-theme-loader to load only Neovim's builtin colorschemes:
+For example, if you want to keep your Neovim setup minimal and don't want to install any additional theme plugins, you can override omarchy-theme-loader's configuration to stick with Neovim's builtin themes.
 
 <details>
 <summary>lazy.nvim example</summary>
