@@ -54,8 +54,12 @@ local function sync_theme()
 	local ok = pcall(vim.cmd.colorscheme, theme.colorscheme)
 	if not ok then
 		vim.notify(
-			string.format("Did not find colorscheme %s. You might need to install a Neovim plugin.", theme.colorscheme)
+			string.format(
+				"Did not find colorscheme %s. You might need to install a Neovim plugin that specifies the colorscheme.",
+				theme.colorscheme
+			)
 		)
+		return
 	end
 
 	-- Set background to be transparent.
@@ -73,7 +77,7 @@ end
 ---Sync the Neovim theme to current Omarchy theme, and start watching for Omarchy theme changes.
 ---
 ---Do not call this directly from your Neovim config; Neovim will call it automatically on startup via
----`plugin/omarchy-theme-loader.lua`.
+---`after/plugin/omarchy-theme-loader.lua`.
 M.start = function()
 	if not is_omarchy() then
 		return
