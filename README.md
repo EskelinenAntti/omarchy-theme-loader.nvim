@@ -113,40 +113,43 @@ Add this to your init.lua file and you are good to go.
 ```lua
 local add = MiniDeps.add
 
--- 1. Install the Neovim plugins for Omarchy themes.
-add({ source = 'ribru17/bamboo.nvim' })
-add({ source = 'catppuccin/nvim', name = 'catppuccin' })
-add({ source = 'neanias/everforest-nvim' })
-add({ source = 'kepano/flexoki-neovim' })
-add({ source = 'ellisonleao/gruvbox.nvim' })
-add({ source = 'rebelot/kanagawa.nvim' })
-add({ source = 'tahayvr/matteblack.nvim' })
-add({ source = 'shaunsingh/nord.nvim' })
-add({ source = 'rose-pine/neovim', name = 'rose-pine' })
-add({ source = 'folke/tokyonight.nvim' })
-add({ source = 'EdenEast/nightfox.nvim' })
-
-add({ source = 'loctvl842/monokai-pro.nvim' })
-require('monokai-pro').setup({
-  filter = 'ristretto',
-  override = function()
-    return {
-      NonText = { fg = '#948a8b' },
-      MiniIconsGrey = { fg = '#948a8b' },
-      MiniIconsRed = { fg = '#fd6883' },
-      MiniIconsBlue = { fg = '#85dacc' },
-      MiniIconsGreen = { fg = '#adda78' },
-      MiniIconsYellow = { fg = '#f9cc6c' },
-      MiniIconsOrange = { fg = '#f38d70' },
-      MiniIconsPurple = { fg = '#a8a9eb' },
-      MiniIconsAzure = { fg = '#a8a9eb' },
-      MiniIconsCyan = { fg = '#85dacc' },
-    }
-  end,
+add({
+    -- 1. Install the Neovim plugins for Omarchy themes.
+	depends = {
+		"ribru17/bamboo.nvim",
+		{ source = "catppuccin/nvim", name = "catppuccin" },
+		"neanias/everforest-nvim",
+		"kepano/flexoki-neovim",
+		"ellisonleao/gruvbox.nvim",
+		"rebelot/kanagawa.nvim",
+		"tahayvr/matteblack.nvim",
+		"shaunsingh/nord.nvim",
+		{ source = "rose-pine/neovim", name = "rose-pine" },
+		"folke/tokyonight.nvim",
+		"EdenEast/nightfox.nvim",
+		"loctvl842/monokai-pro.nvim",
+	},
+    -- 2. Install omarchy-theme-loader plugin
+	source = "EskelinenAntti/omarchy-theme-loader.nvim",
 })
 
--- 2. Install the omarchy-theme-loader plugin.
-add({ source = 'EskelinenAntti/omarchy-theme-loader.nvim' })
+require("monokai-pro").setup({
+	filter = "ristretto",
+	override = function()
+		return {
+			NonText = { fg = "#948a8b" },
+			MiniIconsGrey = { fg = "#948a8b" },
+			MiniIconsRed = { fg = "#fd6883" },
+			MiniIconsBlue = { fg = "#85dacc" },
+			MiniIconsGreen = { fg = "#adda78" },
+			MiniIconsYellow = { fg = "#f9cc6c" },
+			MiniIconsOrange = { fg = "#f38d70" },
+			MiniIconsPurple = { fg = "#a8a9eb" },
+			MiniIconsAzure = { fg = "#a8a9eb" },
+			MiniIconsCyan = { fg = "#85dacc" },
+		}
+	end,
+})
 ```
 
 </details>
@@ -216,13 +219,17 @@ return {
 ```lua
 local add = MiniDeps.add
 
--- ... other themes
+add({
+	source = "EskelinenAntti/omarchy-theme-loader.nvim",
+	depends = {
+        -- ... other themes
 
--- 1. Install the theme plugin
-add({ source = "bjarneo/ash.nvim" })
+        -- 1. Install the theme plugin
+		"bjarneo/ash.nvim",
+	},
+})
 
 -- 2. Configure required mapping between Omarchy theme name and Neovim colorscheme.
-add({ source = 'EskelinenAntti/omarchy-theme-loader.nvim' })
 require("omarchy-theme-loader").setup({
     themes = {
         -- Name of the Omarchy theme.
