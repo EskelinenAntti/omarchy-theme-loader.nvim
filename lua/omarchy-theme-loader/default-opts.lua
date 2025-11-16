@@ -1,5 +1,5 @@
 ---@type Opts
-local default_themes = {
+local default_opts = {
 	themes = {
 		["osaka-jade"] = {
 			colorscheme = "bamboo",
@@ -40,4 +40,4 @@ local default_themes = {
 	},
 }
 
-return default_themes
+return default_opts
