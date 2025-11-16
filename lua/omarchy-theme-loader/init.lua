@@ -1,5 +1,8 @@
 local opts = require("omarchy-theme-loader.default-opts")
-local omarchy_current_path = vim.env.HOME .. "/.config/omarchy/current"
+local omarchy_current_path = vim.fs.joinpath(vim.env.HOME, ".config", "omarchy", "current")
+
+---@type userdata|nil
+local handle
 
 --- Configuration for a single theme.
 ---@class Theme
@@ -24,29 +27,43 @@ local function current_omarchy_theme_name()
 	return theme
 end
 
+local function is_omarchy()
+	return vim.uv.fs_stat(omarchy_current_path) ~= nil
+end
+
 ---Sync Neovim theme to the current Omarchy theme.
 local function sync_theme()
 	local omarchy_theme = current_omarchy_theme_name()
 
 	local theme = opts.themes[omarchy_theme]
-	if theme then
-		-- Reset background option to its default.
-		vim.o.background = "dark"
-
-		-- Enable the actual theme.
-		vim.cmd.colorscheme(theme.colorscheme)
-
-		-- Set background to be transparent.
-		require("omarchy-theme-loader.transparency").set_transparent_background()
-	else
+	if not theme then
 		vim.notify(
 			string.format(
-				"Did not find Neovim theme for Omarchy theme '%s'. Check your omarchy-theme-loader configuration.",
+				"Did not find Neovim theme for Omarchy theme '%s'. You can specify it via your omarchy-theme-loader configuration.",
 				omarchy_theme
 			),
 			vim.log.levels.ERROR
 		)
+		return
 	end
+
+	-- Reset background option to its default.
+	vim.o.background = "dark"
+
+	-- Enable the actual theme.
+	local ok = pcall(vim.cmd.colorscheme, theme.colorscheme)
+	if not ok then
+		vim.notify(
+			string.format(
+				"Did not find colorscheme %s. You might need to install a Neovim plugin that specifies the colorscheme.",
+				theme.colorscheme
+			)
+		)
+		return
+	end
+
+	-- Set background to be transparent.
+	require("omarchy-theme-loader.transparency").set_transparent_background()
 end
 
 local M = {}
@@ -60,12 +77,21 @@ end
 ---Sync the Neovim theme to current Omarchy theme, and start watching for Omarchy theme changes.
 ---
 ---Do not call this directly from your Neovim config; Neovim will call it automatically on startup via
----`plugin/omarchy-theme-loader.lua`.
+---`after/plugin/omarchy-theme-loader.lua`.
 M.start = function()
+	if not is_omarchy() then
+		return
+	end
+
 	-- Sync the theme at startup.
 	sync_theme()
 
-	local handle, err = vim.uv.new_fs_event()
+	if handle then
+		return
+	end
+
+	local err
+	handle, err = vim.uv.new_fs_event()
 	if err or not handle then
 		vim.notify(string.format("Could not start listening for Omarchy theme changes: %s", err), vim.log.levels.ERROR)
 		return

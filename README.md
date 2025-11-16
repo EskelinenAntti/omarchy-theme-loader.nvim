@@ -113,40 +113,43 @@ Add this to your init.lua file and you are good to go.
 ```lua
 local add = MiniDeps.add
 
--- 1. Install the Neovim plugins for Omarchy themes.
-add({ source = 'ribru17/bamboo.nvim' })
-add({ source = 'catppuccin/nvim', name = 'catppuccin' })
-add({ source = 'neanias/everforest-nvim' })
-add({ source = 'kepano/flexoki-neovim' })
-add({ source = 'ellisonleao/gruvbox.nvim' })
-add({ source = 'rebelot/kanagawa.nvim' })
-add({ source = 'tahayvr/matteblack.nvim' })
-add({ source = 'shaunsingh/nord.nvim' })
-add({ source = 'rose-pine/neovim', name = 'rose-pine' })
-add({ source = 'folke/tokyonight.nvim' })
-add({ source = 'EdenEast/nightfox.nvim' })
-
-add({ source = 'loctvl842/monokai-pro.nvim' })
-require('monokai-pro').setup({
-  filter = 'ristretto',
-  override = function()
-    return {
-      NonText = { fg = '#948a8b' },
-      MiniIconsGrey = { fg = '#948a8b' },
-      MiniIconsRed = { fg = '#fd6883' },
-      MiniIconsBlue = { fg = '#85dacc' },
-      MiniIconsGreen = { fg = '#adda78' },
-      MiniIconsYellow = { fg = '#f9cc6c' },
-      MiniIconsOrange = { fg = '#f38d70' },
-      MiniIconsPurple = { fg = '#a8a9eb' },
-      MiniIconsAzure = { fg = '#a8a9eb' },
-      MiniIconsCyan = { fg = '#85dacc' },
-    }
-  end,
+add({
+    -- 1. Install the Neovim plugins for Omarchy themes.
+	depends = {
+		"ribru17/bamboo.nvim",
+		{ source = "catppuccin/nvim", name = "catppuccin" },
+		"neanias/everforest-nvim",
+		"kepano/flexoki-neovim",
+		"ellisonleao/gruvbox.nvim",
+		"rebelot/kanagawa.nvim",
+		"tahayvr/matteblack.nvim",
+		"shaunsingh/nord.nvim",
+		{ source = "rose-pine/neovim", name = "rose-pine" },
+		"folke/tokyonight.nvim",
+		"EdenEast/nightfox.nvim",
+		"loctvl842/monokai-pro.nvim",
+	},
+    -- 2. Install omarchy-theme-loader plugin
+	source = "EskelinenAntti/omarchy-theme-loader.nvim",
 })
 
--- 2. Install the omarchy-theme-loader plugin.
-add({ source = 'EskelinenAntti/omarchy-theme-loader.nvim' })
+require("monokai-pro").setup({
+	filter = "ristretto",
+	override = function()
+		return {
+			NonText = { fg = "#948a8b" },
+			MiniIconsGrey = { fg = "#948a8b" },
+			MiniIconsRed = { fg = "#fd6883" },
+			MiniIconsBlue = { fg = "#85dacc" },
+			MiniIconsGreen = { fg = "#adda78" },
+			MiniIconsYellow = { fg = "#f9cc6c" },
+			MiniIconsOrange = { fg = "#f38d70" },
+			MiniIconsPurple = { fg = "#a8a9eb" },
+			MiniIconsAzure = { fg = "#a8a9eb" },
+			MiniIconsCyan = { fg = "#85dacc" },
+		}
+	end,
+})
 ```
 
 </details>
@@ -165,7 +168,10 @@ To use
 
 </details>
 
-## Custom Omarchy themes
+
+## Advanced configuration
+
+### Custom Omarchy themes
 
 If you use a custom Omarchy theme
 1. Install the Neovim plugin for that theme.
@@ -213,13 +219,17 @@ return {
 ```lua
 local add = MiniDeps.add
 
--- ... other themes
+add({
+	source = "EskelinenAntti/omarchy-theme-loader.nvim",
+	depends = {
+        -- ... other themes
 
--- 1. Install the theme plugin
-add({ source = "bjarneo/ash.nvim" })
+        -- 1. Install the theme plugin
+		"bjarneo/ash.nvim",
+	},
+})
 
 -- 2. Configure required mapping between Omarchy theme name and Neovim colorscheme.
-add({ source = 'EskelinenAntti/omarchy-theme-loader.nvim' })
 require("omarchy-theme-loader").setup({
     themes = {
         -- Name of the Omarchy theme.
@@ -236,4 +246,81 @@ require("omarchy-theme-loader").setup({
 Don't know where to look for the plugin or the colorscheme? You can find those from the custom Omarchy theme's repository, from `neovim.lua` file.
 
 For example, see the [neovim.lua](https://github.com/bjarneo/omarchy-ash-theme/blob/main/neovim.lua) file for the Omarchy Ash Theme: the Neovim plugin is `bjarneo/ash.nvim` and the colorscheme is `ash`.
+
+## Overriding Omarchy's default themes
+
+Your are not forced to use the same Neovim themes as Omarchy uses by default.
+
+For example, if you want to keep your Neovim setup minimal and don't want to install any additional theme plugins, you can override omarchy-theme-loader's default configuration to stick with Neovim's builtin themes.
+
+<details>
+<summary>lazy.nvim example</summary>
+
+
+```lua
+return {
+	{
+		"EskelinenAntti/omarchy-theme-loader.nvim",
+        opts = {
+            themes = {
+                ["tokyo-night"] = { colorscheme = "slate" },
+                ["catppuccin"] = { colorscheme = "blue" },
+                ["everforest"] = { colorscheme = "desert" },
+                ["gruvbox"] = { colorscheme = "retrobox" },
+                ["osaka-jade"] = { colorscheme = "slate" },
+                ["kanagawa"] = { colorscheme = "slate" },
+                ["nord"] = { colorscheme = "blue" },
+                ["matte-black"] = { colorscheme = "koehler" },
+                ["ristretto"] = { colorscheme = "koehler" },
+                ["flexoki-light"] = { colorscheme = "morning" },
+                ["rose-pine"] = { colorscheme = "morning" },
+                ["catppuccin-latte"] = { colorscheme = "delek" },
+            }
+        }
+
+	},
+```
+
+</details>
+
+<details>
+
+<summary>mini.deps example</summary>
+
+```lua
+local add = MiniDeps.add
+
+add("EskelinenAntti/omarchy-theme-loader.nvim")
+require("omarchy-theme-loader").setup({
+    themes = {
+		["tokyo-night"] = { colorscheme = "slate" },
+		["catppuccin"] = { colorscheme = "blue" },
+		["everforest"] = { colorscheme = "desert" },
+		["gruvbox"] = { colorscheme = "retrobox" },
+		["osaka-jade"] = { colorscheme = "slate" },
+		["kanagawa"] = { colorscheme = "slate" },
+		["nord"] = { colorscheme = "blue" },
+		["matte-black"] = { colorscheme = "koehler" },
+		["ristretto"] = { colorscheme = "koehler" },
+		["flexoki-light"] = { colorscheme = "morning" },
+		["rose-pine"] = { colorscheme = "morning" },
+		["catppuccin-latte"] = { colorscheme = "delek" },
+    }
+})
+```
+
+</details>
+
+## Other OSs
+
+The plugin only activates when it detects the Omarchy theme folder at `~/.config/omarchy/current/theme`.
+
+If you use the same Neovim configuration across different OSs, you can set a theme for non-Omarchy environments just like you would without the omarchy-theme-loader.nvim plugin:
+
+```lua
+vim.cmd.colorscheme("retrobox") -- or any other colorscheme you want to use
+```
+
+For Omarchy, this value will be overridden by omarchy-theme-loader, but it will still apply in other OSs and environments.
+
 
