@@ -247,11 +247,11 @@ Don't know where to look for the plugin or the colorscheme? You can find those f
 
 For example, see the [neovim.lua](https://github.com/bjarneo/omarchy-ash-theme/blob/main/neovim.lua) file for the Omarchy Ash Theme: the Neovim plugin is `bjarneo/ash.nvim` and the colorscheme is `ash`.
 
-## Overriding Omarchy's default themes
+### Overriding Omarchy's default themes
 
 Your are not forced to use the same Neovim themes as Omarchy uses by default.
 
-For example, if you want to keep your Neovim setup minimal and don't want to install any additional theme plugins, you can override omarchy-theme-loader's default configuration to stick with Neovim's builtin themes.
+For example, if you want to keep your Neovim setup minimal and don't want to install lot's of theme plugins, you can override omarchy-theme-loader's configuration to use Neovim's builtin themes.
 
 <details>
 <summary>lazy.nvim example</summary>
@@ -311,16 +311,15 @@ require("omarchy-theme-loader").setup({
 
 </details>
 
-## Other OSs
+### Other OSs
 
-The plugin only activates when it detects the Omarchy theme folder at `~/.config/omarchy/current/theme`.
+The plugin only activates when it detects the Omarchy theme folder at `~/.config/omarchy/current/theme`. You can safely include it in your Neovim configuration, even if you shared it between multiple devices.
 
-If you use the same Neovim configuration across different OSs, you can set a theme for non-Omarchy environments just like you would without the omarchy-theme-loader.nvim plugin:
+To specify a theme to be used in non-Omarchy environments, you can simply do
 
 ```lua
-vim.cmd.colorscheme("retrobox") -- or any other colorscheme you want to use
+vim.cmd.colorscheme("retrobox") -- or whatever theme or colorscheme you prefer to use outside of Omarchy
 ```
 
-For Omarchy, this value will be overridden by omarchy-theme-loader, but it will still apply in other OSs and environments.
-
+This setting will apply in non-Omarchy environments. When in Omarchy, the omarchy-theme-loader will overwrite it with the current Omarchy theme.
 
