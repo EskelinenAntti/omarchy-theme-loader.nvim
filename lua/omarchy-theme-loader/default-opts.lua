@@ -37,6 +37,12 @@ local default_opts = {
 		["tokyo-night"] = {
 			colorscheme = "tokyonight-night",
 		},
+		["hackerman"] = {
+			colorscheme = "hackerman",
+		},
+		["ethereal"] = {
+			colorscheme = "ethereal",
+		},
 	},
 }
 

@@ -95,6 +95,17 @@ return {
 		priority = 1000,
 		lazy = true,
 	},
+	{
+		"bjarneo/hackerman.nvim",
+		dependencies = { "bjarneo/aether.nvim" },
+		priority = 1000,
+        lazy = true,
+	},
+    {
+        "bjarneo/ethereal.nvim",
+        priority = 1000,
+        lazy = true
+    },
     -- 2. Install the omarchy-theme-loader plugin.
 	{
 		"EskelinenAntti/omarchy-theme-loader.nvim"
@@ -128,6 +139,9 @@ add({
 		"folke/tokyonight.nvim",
 		"EdenEast/nightfox.nvim",
 		"loctvl842/monokai-pro.nvim",
+        "bjarneo/aether.nvim",
+		"bjarneo/hackerman.nvim",
+        "bjarneo/ethereal.nvim",
 	},
     -- 2. Install omarchy-theme-loader plugin
 	source = "EskelinenAntti/omarchy-theme-loader.nvim",
