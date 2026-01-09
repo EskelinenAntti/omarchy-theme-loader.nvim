@@ -15,16 +15,23 @@ local handle
 ---Get name of currently active Omarchy theme.
 ---@return string
 local function current_omarchy_theme_name()
-	-- Path to current/theme symlink
+	-- Path to theme.name file
+	local theme_name_file = omarchy_current_path .. "/theme.name"
+
+	-- Read theme name from file
+	local file = io.open(theme_name_file, "r")
+	if file then
+		local theme = file:read("*l")
+		file:close()
+		if theme then
+			return theme
+		end
+	end
+
+	-- Fallback: try resolving symlink (legacy behavior)
 	local symlink = omarchy_current_path .. "/theme"
-
-	-- Resolve the symlink (= return the path the symlink points at).
 	local resolved = vim.fn.resolve(symlink)
-
-	-- From that path, parse the theme name.
-	local theme = vim.fn.fnamemodify(resolved, ":t")
-
-	return theme
+	return vim.fn.fnamemodify(resolved, ":t")
 end
 
 local function is_omarchy()
@@ -100,8 +107,8 @@ M.start = function()
 	-- Start listening for theme changes in ~/.config/omarchy/current folder.
 	vim.uv.fs_event_start(handle, omarchy_current_path, {}, function(_, filename, _)
 		-- We are not interested in other changes in current/ such as background changes.
-		-- Filter out theme changes.
-		if filename ~= "theme" then
+		-- Filter out theme changes (theme.name file or theme directory for legacy).
+		if filename ~= "theme.name" and filename ~= "theme" then
 			return
 		end
 
