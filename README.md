@@ -51,7 +51,7 @@ return {
 		lazy = true,
 	},
 	{
-		"loctvl842/monokai-pro.nvim",
+		"gthelding/monokai-pro.nvim",
 		priority = 1000,
 		lazy = true,
 		config = function()
@@ -138,7 +138,7 @@ add({
 		{ source = "rose-pine/neovim", name = "rose-pine" },
 		"folke/tokyonight.nvim",
 		"EdenEast/nightfox.nvim",
-		"loctvl842/monokai-pro.nvim",
+		"gthelding/monokai-pro.nvim",
         "bjarneo/aether.nvim",
 		"bjarneo/hackerman.nvim",
         "bjarneo/ethereal.nvim",
