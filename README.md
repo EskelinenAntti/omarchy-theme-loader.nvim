@@ -104,7 +104,22 @@ return {
     {
         "bjarneo/ethereal.nvim",
         priority = 1000,
-        lazy = true
+        lazy = true,
+    },
+    {
+        "xero/miasma.nvim",
+        priority = 1000,
+        lazy = true,
+    },
+    {
+        "bjarneo/vantablack.nvim",
+        priority = 1000,
+        lazy = true,
+    },
+    {
+        "bjarneo/white.nvim",
+        priority = 1000,
+        lazy = true,
     },
     -- 2. Install the omarchy-theme-loader plugin.
 	{
@@ -142,6 +157,9 @@ add({
         "bjarneo/aether.nvim",
 		"bjarneo/hackerman.nvim",
         "bjarneo/ethereal.nvim",
+        "xero/miasma.nvim",
+        "bjarneo/vantablack.nvim",
+        "bjarneo/white.nvim",
 	},
     -- 2. Install omarchy-theme-loader plugin
 	source = "EskelinenAntti/omarchy-theme-loader.nvim",

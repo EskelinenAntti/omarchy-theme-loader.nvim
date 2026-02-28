@@ -43,6 +43,15 @@ local default_opts = {
 		["ethereal"] = {
 			colorscheme = "ethereal",
 		},
+		["vantablack"] = {
+			colorscheme = "vantablack",
+		},
+		["white"] = {
+			colorscheme = "white",
+		},
+		["miasma"] = {
+			colorscheme = "miasma",
+		},
 	},
 }
 
